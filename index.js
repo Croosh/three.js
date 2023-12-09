@@ -22,7 +22,7 @@ const renderer = new THREE.WebGLRenderer({
 renderer.setPixelRatio(2);
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.toneMapping = THREE.ReinhardToneMapping;
-camera.position.set(10, 100, 100);
+camera.position.set(100, 100, 100);
 
 // LIGHT
 const pointLight = new THREE.PointLight(0xffffff, 1000);
@@ -47,23 +47,14 @@ scene.add(cameraHelper);
 scene.add(gridHelper, planeHelper);
 
 //TORUS
-// const geometry = new THREE.SphereGeometry(10, 64, 64);
-// const mesh = new THREE.MeshStandardMaterial({
-//   color: 0xf332f2,
-// });
-// const torus = new THREE.Mesh(geometry, mesh);
-// scene.add(torus);
+const geometry = new THREE.SphereGeometry(10, 64, 64);
+const mesh = new THREE.MeshStandardMaterial({
+  color: 0xf332f2,
+});
+const torus = new THREE.Mesh(geometry, mesh);
+scene.add(torus);
 
 // LOADER
-var mesh;
-
-const loader = new GLTFLoader();
-loader.load("model/scene.gltf", (gltf) => {
-  mesh = gltf.scene;
-  mesh.scale.set(1, 1, 1);
-  scene.add(mesh);
-});
-
 // CONTROLES
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true;
@@ -72,25 +63,6 @@ controls.enablePan = true;
 controls.enableZoom = true;
 // controls.minPolarAngle = Math.PI / 2;
 // controls.maxPolarAngle = Math.PI / 2;
-
-//POST PROCESSING
-
-// const composer = new EffectComposer(renderer);
-
-// const renderPass = new RenderPass(scene, camera);
-// const renderPixelatedPass = new RenderPixelatedPass(12, scene, camera);
-// composer.addPass(renderPass);
-
-// const bloomPass = new UnrealBloomPass(
-//   new THREE.Vector2(window.innerWidth, window.innerHeight),
-//   1,
-//   0.7,
-//   1
-// );
-// composer.addPass(bloomPass);
-
-// const outputPass = new OutputPass();
-// composer.addPass(outputPass);
 
 // WINDOW RESIZE
 
@@ -112,7 +84,6 @@ function animation() {
   requestAnimationFrame(animation);
   controls.update();
   renderer.render(scene, camera);
-  // composer.render();
 }
 
 animation();
